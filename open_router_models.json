@@ -1,0 +1,1426 @@
+[
+    {
+        "Model Name": "Qwen2.5 72B Instruct",
+        "ID": "qwen/qwen-2.5-72b-instruct",
+        "Prompt cost": "$0.35",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Qwen2-VL 72B Instruct",
+        "ID": "qwen/qwen-2-vl-72b-instruct",
+        "Prompt cost": "$0.4",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Lumimaid v0.2 8B",
+        "ID": "neversleep/llama-3.1-lumimaid-8b",
+        "Prompt cost": "$0.1875",
+        "Completion cost": "$1.125",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: o1-mini (2024-09-12)",
+        "ID": "openai/o1-mini-2024-09-12",
+        "Prompt cost": "$3",
+        "Completion cost": "$12",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: o1-mini",
+        "ID": "openai/o1-mini",
+        "Prompt cost": "$3",
+        "Completion cost": "$12",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: o1-preview (2024-09-12)",
+        "ID": "openai/o1-preview-2024-09-12",
+        "Prompt cost": "$15",
+        "Completion cost": "$60",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: o1-preview",
+        "ID": "openai/o1-preview",
+        "Prompt cost": "$15",
+        "Completion cost": "$60",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Mistral: Pixtral 12B (free)",
+        "ID": "mistralai/pixtral-12b:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Pixtral 12B",
+        "ID": "mistralai/pixtral-12b",
+        "Prompt cost": "$0.15",
+        "Completion cost": "$0.15",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Reflection 70B (free)",
+        "ID": "mattshumer/reflection-70b:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Reflection 70B",
+        "ID": "mattshumer/reflection-70b",
+        "Prompt cost": "$0.35",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Cohere: Command R (03-2024)",
+        "ID": "cohere/command-r-03-2024",
+        "Prompt cost": "$0.5",
+        "Completion cost": "$1.5",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Cohere: Command R+ (04-2024)",
+        "ID": "cohere/command-r-plus-04-2024",
+        "Prompt cost": "$3",
+        "Completion cost": "$15",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Cohere: Command R+ (08-2024)",
+        "ID": "cohere/command-r-plus-08-2024",
+        "Prompt cost": "$2.5",
+        "Completion cost": "$10",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Cohere: Command R (08-2024)",
+        "ID": "cohere/command-r-08-2024",
+        "Prompt cost": "$0.15",
+        "Completion cost": "$0.6",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Qwen2-VL 7B Instruct (free)",
+        "ID": "qwen/qwen-2-vl-7b-instruct:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Qwen2-VL 7B Instruct",
+        "ID": "qwen/qwen-2-vl-7b-instruct",
+        "Prompt cost": "$0.1",
+        "Completion cost": "$0.1",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemini Flash 8B 1.5 Experimental",
+        "ID": "google/gemini-flash-8b-1.5-exp",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 4000000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemini Flash 1.5 Experimental",
+        "ID": "google/gemini-flash-1.5-exp",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 4000000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Llama 3.1 Euryale 70B v2.2",
+        "ID": "sao10k/l3.1-euryale-70b",
+        "Prompt cost": "$0.35",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "AI21: Jamba 1.5 Large",
+        "ID": "ai21/jamba-1-5-large",
+        "Prompt cost": "$2",
+        "Completion cost": "$8",
+        "Context (tokens)": 256000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "AI21: Jamba 1.5 Mini",
+        "ID": "ai21/jamba-1-5-mini",
+        "Prompt cost": "$0.2",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 256000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Phi-3.5 Mini 128K Instruct",
+        "ID": "microsoft/phi-3.5-mini-128k-instruct",
+        "Prompt cost": "$0.1",
+        "Completion cost": "$0.1",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Nous: Hermes 3 70B Instruct",
+        "ID": "nousresearch/hermes-3-llama-3.1-70b",
+        "Prompt cost": "$0.4",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Nous: Hermes 3 405B Instruct (free)",
+        "ID": "nousresearch/hermes-3-llama-3.1-405b:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Nous: Hermes 3 405B Instruct",
+        "ID": "nousresearch/hermes-3-llama-3.1-405b",
+        "Prompt cost": "$4.5",
+        "Completion cost": "$4.5",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Nous: Hermes 3 405B Instruct (extended)",
+        "ID": "nousresearch/hermes-3-llama-3.1-405b:extended",
+        "Prompt cost": "$4.5",
+        "Completion cost": "$4.5",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Perplexity: Llama 3.1 Sonar 405B Online",
+        "ID": "perplexity/llama-3.1-sonar-huge-128k-online",
+        "Prompt cost": "$5",
+        "Completion cost": "$5",
+        "Context (tokens)": 127072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: ChatGPT-4o",
+        "ID": "openai/chatgpt-4o-latest",
+        "Prompt cost": "$5",
+        "Completion cost": "$15",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Llama 3 8B Lunaris",
+        "ID": "sao10k/l3-lunaris-8b",
+        "Prompt cost": "$2",
+        "Completion cost": "$2",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral Nemo 12B Starcannon",
+        "ID": "aetherwiing/mn-starcannon-12b",
+        "Prompt cost": "$2",
+        "Completion cost": "$2",
+        "Context (tokens)": 12000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4o (2024-08-06)",
+        "ID": "openai/gpt-4o-2024-08-06",
+        "Prompt cost": "$2.5",
+        "Completion cost": "$10",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Meta: Llama 3.1 405B (base)",
+        "ID": "meta-llama/llama-3.1-405b",
+        "Prompt cost": "$2",
+        "Completion cost": "$2",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral Nemo 12B Celeste",
+        "ID": "nothingiisreal/mn-celeste-12b",
+        "Prompt cost": "$1.5",
+        "Completion cost": "$1.5",
+        "Context (tokens)": 32000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemini Pro 1.5 Experimental",
+        "ID": "google/gemini-pro-1.5-exp",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 4000000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Perplexity: Llama 3.1 Sonar 70B Online",
+        "ID": "perplexity/llama-3.1-sonar-large-128k-online",
+        "Prompt cost": "$1",
+        "Completion cost": "$1",
+        "Context (tokens)": 28000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Perplexity: Llama 3.1 Sonar 70B",
+        "ID": "perplexity/llama-3.1-sonar-large-128k-chat",
+        "Prompt cost": "$1",
+        "Completion cost": "$1",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Perplexity: Llama 3.1 Sonar 8B Online",
+        "ID": "perplexity/llama-3.1-sonar-small-128k-online",
+        "Prompt cost": "$0.2",
+        "Completion cost": "$0.2",
+        "Context (tokens)": 28000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Perplexity: Llama 3.1 Sonar 8B",
+        "ID": "perplexity/llama-3.1-sonar-small-128k-chat",
+        "Prompt cost": "$0.2",
+        "Completion cost": "$0.2",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3.1 70B Instruct",
+        "ID": "meta-llama/llama-3.1-70b-instruct",
+        "Prompt cost": "$0.3",
+        "Completion cost": "$0.3",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3.1 8B Instruct (free)",
+        "ID": "meta-llama/llama-3.1-8b-instruct:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3.1 8B Instruct",
+        "ID": "meta-llama/llama-3.1-8b-instruct",
+        "Prompt cost": "$0.055",
+        "Completion cost": "$0.055",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3.1 405B Instruct",
+        "ID": "meta-llama/llama-3.1-405b-instruct",
+        "Prompt cost": "$1.79",
+        "Completion cost": "$1.79",
+        "Context (tokens)": 131072,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Codestral Mamba",
+        "ID": "mistralai/codestral-mamba",
+        "Prompt cost": "$0.25",
+        "Completion cost": "$0.25",
+        "Context (tokens)": 256000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Mistral Nemo",
+        "ID": "mistralai/mistral-nemo",
+        "Prompt cost": "$0.13",
+        "Completion cost": "$0.13",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4o-mini (2024-07-18)",
+        "ID": "openai/gpt-4o-mini-2024-07-18",
+        "Prompt cost": "$0.15",
+        "Completion cost": "$0.6",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4o-mini",
+        "ID": "openai/gpt-4o-mini",
+        "Prompt cost": "$0.15",
+        "Completion cost": "$0.6",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Qwen 2 7B Instruct (free)",
+        "ID": "qwen/qwen-2-7b-instruct:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Qwen 2 7B Instruct",
+        "ID": "qwen/qwen-2-7b-instruct",
+        "Prompt cost": "$0.055",
+        "Completion cost": "$0.055",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemma 2 27B",
+        "ID": "google/gemma-2-27b-it",
+        "Prompt cost": "$0.27",
+        "Completion cost": "$0.27",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Magnum 72B",
+        "ID": "alpindale/magnum-72b",
+        "Prompt cost": "$3.75",
+        "Completion cost": "$4.5",
+        "Context (tokens)": 16384,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Nous: Hermes 2 Theta 8B",
+        "ID": "nousresearch/hermes-2-theta-llama-3-8b",
+        "Prompt cost": "$0.1875",
+        "Completion cost": "$1.125",
+        "Context (tokens)": 16384,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemma 2 9B (free)",
+        "ID": "google/gemma-2-9b-it:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemma 2 9B",
+        "ID": "google/gemma-2-9b-it",
+        "Prompt cost": "$0.06",
+        "Completion cost": "$0.06",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "AI21: Jamba Instruct",
+        "ID": "ai21/jamba-instruct",
+        "Prompt cost": "$0.5",
+        "Completion cost": "$0.7",
+        "Context (tokens)": 256000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Anthropic: Claude 3.5 Sonnet",
+        "ID": "anthropic/claude-3.5-sonnet",
+        "Prompt cost": "$3",
+        "Completion cost": "$15",
+        "Context (tokens)": 200000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude 3.5 Sonnet (self-moderated)",
+        "ID": "anthropic/claude-3.5-sonnet:beta",
+        "Prompt cost": "$3",
+        "Completion cost": "$15",
+        "Context (tokens)": 200000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Llama 3 Euryale 70B v2.1",
+        "ID": "sao10k/l3-euryale-70b",
+        "Prompt cost": "$0.35",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Phi-3 Medium 4K Instruct",
+        "ID": "microsoft/phi-3-medium-4k-instruct",
+        "Prompt cost": "$0.14",
+        "Completion cost": "$0.14",
+        "Context (tokens)": 4000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Dolphin 2.9.2 Mixtral 8x22B 🐬",
+        "ID": "cognitivecomputations/dolphin-mixtral-8x22b",
+        "Prompt cost": "$0.9",
+        "Completion cost": "$0.9",
+        "Context (tokens)": 65536,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Qwen 2 72B Instruct",
+        "ID": "qwen/qwen-2-72b-instruct",
+        "Prompt cost": "$0.35",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "NousResearch: Hermes 2 Pro - Llama-3 8B",
+        "ID": "nousresearch/hermes-2-pro-llama-3-8b",
+        "Prompt cost": "$0.14",
+        "Completion cost": "$0.14",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Mistral 7B Instruct v0.3",
+        "ID": "mistralai/mistral-7b-instruct-v0.3",
+        "Prompt cost": "$0.055",
+        "Completion cost": "$0.055",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Mistral 7B Instruct (free)",
+        "ID": "mistralai/mistral-7b-instruct:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Mistral 7B Instruct",
+        "ID": "mistralai/mistral-7b-instruct",
+        "Prompt cost": "$0.055",
+        "Completion cost": "$0.055",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Mistral 7B Instruct (nitro)",
+        "ID": "mistralai/mistral-7b-instruct:nitro",
+        "Prompt cost": "$0.07",
+        "Completion cost": "$0.07",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Phi-3 Mini 128K Instruct (free)",
+        "ID": "microsoft/phi-3-mini-128k-instruct:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Phi-3 Mini 128K Instruct",
+        "ID": "microsoft/phi-3-mini-128k-instruct",
+        "Prompt cost": "$0.1",
+        "Completion cost": "$0.1",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Phi-3 Medium 128K Instruct (free)",
+        "ID": "microsoft/phi-3-medium-128k-instruct:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Phi-3 Medium 128K Instruct",
+        "ID": "microsoft/phi-3-medium-128k-instruct",
+        "Prompt cost": "$1",
+        "Completion cost": "$1",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Llama 3 Lumimaid 70B",
+        "ID": "neversleep/llama-3-lumimaid-70b",
+        "Prompt cost": "$3.375",
+        "Completion cost": "$4.5",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemini Flash 1.5",
+        "ID": "google/gemini-flash-1.5",
+        "Prompt cost": "$0.0375",
+        "Completion cost": "$0.15",
+        "Context (tokens)": 4000000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "DeepSeek V2.5",
+        "ID": "deepseek/deepseek-chat",
+        "Prompt cost": "$0.14",
+        "Completion cost": "$0.28",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Perplexity: Llama3 Sonar 70B Online",
+        "ID": "perplexity/llama-3-sonar-large-32k-online",
+        "Prompt cost": "$1",
+        "Completion cost": "$1",
+        "Context (tokens)": 28000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Perplexity: Llama3 Sonar 70B",
+        "ID": "perplexity/llama-3-sonar-large-32k-chat",
+        "Prompt cost": "$1",
+        "Completion cost": "$1",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Perplexity: Llama3 Sonar 8B Online",
+        "ID": "perplexity/llama-3-sonar-small-32k-online",
+        "Prompt cost": "$0.2",
+        "Completion cost": "$0.2",
+        "Context (tokens)": 28000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Perplexity: Llama3 Sonar 8B",
+        "ID": "perplexity/llama-3-sonar-small-32k-chat",
+        "Prompt cost": "$0.2",
+        "Completion cost": "$0.2",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: LlamaGuard 2 8B",
+        "ID": "meta-llama/llama-guard-2-8b",
+        "Prompt cost": "$0.18",
+        "Completion cost": "$0.18",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4o (2024-05-13)",
+        "ID": "openai/gpt-4o-2024-05-13",
+        "Prompt cost": "$5",
+        "Completion cost": "$15",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4o",
+        "ID": "openai/gpt-4o",
+        "Prompt cost": "$5",
+        "Completion cost": "$15",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4o (extended)",
+        "ID": "openai/gpt-4o:extended",
+        "Prompt cost": "$6",
+        "Completion cost": "$18",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Qwen 1.5 72B Chat",
+        "ID": "qwen/qwen-72b-chat",
+        "Prompt cost": "$0.81",
+        "Completion cost": "$0.81",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Qwen 1.5 110B Chat",
+        "ID": "qwen/qwen-110b-chat",
+        "Prompt cost": "$1.62",
+        "Completion cost": "$1.62",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Llama 3 Lumimaid 8B",
+        "ID": "neversleep/llama-3-lumimaid-8b",
+        "Prompt cost": "$0.1875",
+        "Completion cost": "$1.125",
+        "Context (tokens)": 24576,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Llama 3 Lumimaid 8B (extended)",
+        "ID": "neversleep/llama-3-lumimaid-8b:extended",
+        "Prompt cost": "$0.1875",
+        "Completion cost": "$1.125",
+        "Context (tokens)": 24576,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Fimbulvetr 11B v2",
+        "ID": "sao10k/fimbulvetr-11b-v2",
+        "Prompt cost": "$0.375",
+        "Completion cost": "$1.5",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3 70B Instruct",
+        "ID": "meta-llama/llama-3-70b-instruct",
+        "Prompt cost": "$0.35",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3 70B Instruct (nitro)",
+        "ID": "meta-llama/llama-3-70b-instruct:nitro",
+        "Prompt cost": "$0.792",
+        "Completion cost": "$0.792",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3 8B Instruct (free)",
+        "ID": "meta-llama/llama-3-8b-instruct:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3 8B Instruct",
+        "ID": "meta-llama/llama-3-8b-instruct",
+        "Prompt cost": "$0.055",
+        "Completion cost": "$0.055",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3 8B Instruct (nitro)",
+        "ID": "meta-llama/llama-3-8b-instruct:nitro",
+        "Prompt cost": "$0.162",
+        "Completion cost": "$0.162",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama 3 8B Instruct (extended)",
+        "ID": "meta-llama/llama-3-8b-instruct:extended",
+        "Prompt cost": "$0.1875",
+        "Completion cost": "$1.125",
+        "Context (tokens)": 16384,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Mixtral 8x22B Instruct",
+        "ID": "mistralai/mixtral-8x22b-instruct",
+        "Prompt cost": "$0.65",
+        "Completion cost": "$0.65",
+        "Context (tokens)": 65536,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "WizardLM-2 7B",
+        "ID": "microsoft/wizardlm-2-7b",
+        "Prompt cost": "$0.055",
+        "Completion cost": "$0.055",
+        "Context (tokens)": 32000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "WizardLM-2 8x22B",
+        "ID": "microsoft/wizardlm-2-8x22b",
+        "Prompt cost": "$0.5",
+        "Completion cost": "$0.5",
+        "Context (tokens)": 65536,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemini Pro 1.5",
+        "ID": "google/gemini-pro-1.5",
+        "Prompt cost": "$2.5",
+        "Completion cost": "$7.5",
+        "Context (tokens)": 4000000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4 Turbo",
+        "ID": "openai/gpt-4-turbo",
+        "Prompt cost": "$10",
+        "Completion cost": "$30",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Cohere: Command R+",
+        "ID": "cohere/command-r-plus",
+        "Prompt cost": "$3",
+        "Completion cost": "$15",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Databricks: DBRX 132B Instruct",
+        "ID": "databricks/dbrx-instruct",
+        "Prompt cost": "$1.08",
+        "Completion cost": "$1.08",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Midnight Rose 70B",
+        "ID": "sophosympatheia/midnight-rose-70b",
+        "Prompt cost": "$0.8",
+        "Completion cost": "$0.8",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Cohere: Command R",
+        "ID": "cohere/command-r",
+        "Prompt cost": "$0.5",
+        "Completion cost": "$1.5",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Cohere: Command",
+        "ID": "cohere/command",
+        "Prompt cost": "$1",
+        "Completion cost": "$2",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Anthropic: Claude 3 Haiku",
+        "ID": "anthropic/claude-3-haiku",
+        "Prompt cost": "$0.25",
+        "Completion cost": "$1.25",
+        "Context (tokens)": 200000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude 3 Haiku (self-moderated)",
+        "ID": "anthropic/claude-3-haiku:beta",
+        "Prompt cost": "$0.25",
+        "Completion cost": "$1.25",
+        "Context (tokens)": 200000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Anthropic: Claude 3 Sonnet",
+        "ID": "anthropic/claude-3-sonnet",
+        "Prompt cost": "$3",
+        "Completion cost": "$15",
+        "Context (tokens)": 200000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude 3 Sonnet (self-moderated)",
+        "ID": "anthropic/claude-3-sonnet:beta",
+        "Prompt cost": "$3",
+        "Completion cost": "$15",
+        "Context (tokens)": 200000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Anthropic: Claude 3 Opus",
+        "ID": "anthropic/claude-3-opus",
+        "Prompt cost": "$15",
+        "Completion cost": "$75",
+        "Context (tokens)": 200000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude 3 Opus (self-moderated)",
+        "ID": "anthropic/claude-3-opus:beta",
+        "Prompt cost": "$15",
+        "Completion cost": "$75",
+        "Context (tokens)": 200000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral Large",
+        "ID": "mistralai/mistral-large",
+        "Prompt cost": "$2",
+        "Completion cost": "$6",
+        "Context (tokens)": 128000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4 Turbo Preview",
+        "ID": "openai/gpt-4-turbo-preview",
+        "Prompt cost": "$10",
+        "Completion cost": "$30",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-3.5 Turbo (older v0613)",
+        "ID": "openai/gpt-3.5-turbo-0613",
+        "Prompt cost": "$1",
+        "Completion cost": "$2",
+        "Context (tokens)": 4095,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Nous: Hermes 2 Mixtral 8x7B DPO",
+        "ID": "nousresearch/nous-hermes-2-mixtral-8x7b-dpo",
+        "Prompt cost": "$0.45",
+        "Completion cost": "$0.45",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral Medium",
+        "ID": "mistralai/mistral-medium",
+        "Prompt cost": "$2.75",
+        "Completion cost": "$8.1",
+        "Context (tokens)": 32000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral Small",
+        "ID": "mistralai/mistral-small",
+        "Prompt cost": "$0.2",
+        "Completion cost": "$0.6",
+        "Context (tokens)": 32000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral Tiny",
+        "ID": "mistralai/mistral-tiny",
+        "Prompt cost": "$0.25",
+        "Completion cost": "$0.25",
+        "Context (tokens)": 32000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Chronos Hermes 13B v2",
+        "ID": "austism/chronos-hermes-13b",
+        "Prompt cost": "$0.13",
+        "Completion cost": "$0.13",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Nous: Hermes 2 Yi 34B",
+        "ID": "nousresearch/nous-hermes-yi-34b",
+        "Prompt cost": "$0.72",
+        "Completion cost": "$0.72",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Mistral 7B Instruct v0.2",
+        "ID": "mistralai/mistral-7b-instruct-v0.2",
+        "Prompt cost": "$0.055",
+        "Completion cost": "$0.055",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Dolphin 2.6 Mixtral 8x7B 🐬",
+        "ID": "cognitivecomputations/dolphin-mixtral-8x7b",
+        "Prompt cost": "$0.5",
+        "Completion cost": "$0.5",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemini Pro Vision 1.0",
+        "ID": "google/gemini-pro-vision",
+        "Prompt cost": "$0.125",
+        "Completion cost": "$0.375",
+        "Context (tokens)": 65536,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: Gemini Pro 1.0",
+        "ID": "google/gemini-pro",
+        "Prompt cost": "$0.125",
+        "Completion cost": "$0.375",
+        "Context (tokens)": 131040,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mixtral 8x7B Instruct",
+        "ID": "mistralai/mixtral-8x7b-instruct",
+        "Prompt cost": "$0.24",
+        "Completion cost": "$0.24",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mixtral 8x7B Instruct (nitro)",
+        "ID": "mistralai/mixtral-8x7b-instruct:nitro",
+        "Prompt cost": "$0.54",
+        "Completion cost": "$0.54",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mixtral 8x7B (base)",
+        "ID": "mistralai/mixtral-8x7b",
+        "Prompt cost": "$0.54",
+        "Completion cost": "$0.54",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "StripedHyena Nous 7B",
+        "ID": "togethercomputer/stripedhyena-nous-7b",
+        "Prompt cost": "$0.18",
+        "Completion cost": "$0.18",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "MythoMist 7B (free)",
+        "ID": "gryphe/mythomist-7b:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "MythoMist 7B",
+        "ID": "gryphe/mythomist-7b",
+        "Prompt cost": "$0.375",
+        "Completion cost": "$0.375",
+        "Context (tokens)": 32768,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenChat 3.5 7B (free)",
+        "ID": "openchat/openchat-7b:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenChat 3.5 7B",
+        "ID": "openchat/openchat-7b",
+        "Prompt cost": "$0.055",
+        "Completion cost": "$0.055",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Noromaid 20B",
+        "ID": "neversleep/noromaid-20b",
+        "Prompt cost": "$1.5",
+        "Completion cost": "$2.25",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Anthropic: Claude Instant v1.1",
+        "ID": "anthropic/claude-instant-1.1",
+        "Prompt cost": "$0.8",
+        "Completion cost": "$2.4",
+        "Context (tokens)": 100000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude v2.1",
+        "ID": "anthropic/claude-2.1",
+        "Prompt cost": "$8",
+        "Completion cost": "$24",
+        "Context (tokens)": 200000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude v2.1 (self-moderated)",
+        "ID": "anthropic/claude-2.1:beta",
+        "Prompt cost": "$8",
+        "Completion cost": "$24",
+        "Context (tokens)": 200000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Anthropic: Claude v2",
+        "ID": "anthropic/claude-2",
+        "Prompt cost": "$8",
+        "Completion cost": "$24",
+        "Context (tokens)": 200000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude v2 (self-moderated)",
+        "ID": "anthropic/claude-2:beta",
+        "Prompt cost": "$8",
+        "Completion cost": "$24",
+        "Context (tokens)": 200000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenHermes 2.5 Mistral 7B",
+        "ID": "teknium/openhermes-2.5-mistral-7b",
+        "Prompt cost": "$0.17",
+        "Completion cost": "$0.17",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4 Vision",
+        "ID": "openai/gpt-4-vision-preview",
+        "Prompt cost": "$10",
+        "Completion cost": "$30",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "lzlv 70B",
+        "ID": "lizpreciatior/lzlv-70b-fp16-hf",
+        "Prompt cost": "$0.35",
+        "Completion cost": "$0.4",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Goliath 120B",
+        "ID": "alpindale/goliath-120b",
+        "Prompt cost": "$9.375",
+        "Completion cost": "$9.375",
+        "Context (tokens)": 6144,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Toppy M 7B (free)",
+        "ID": "undi95/toppy-m-7b:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Toppy M 7B",
+        "ID": "undi95/toppy-m-7b",
+        "Prompt cost": "$0.07",
+        "Completion cost": "$0.07",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Toppy M 7B (nitro)",
+        "ID": "undi95/toppy-m-7b:nitro",
+        "Prompt cost": "$0.07",
+        "Completion cost": "$0.07",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Auto (best for prompt)",
+        "ID": "openrouter/auto",
+        "Prompt cost": "200000",
+        "Completion cost": "--",
+        "Context (tokens)": null,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4 Turbo (older v1106)",
+        "ID": "openai/gpt-4-1106-preview",
+        "Prompt cost": "$10",
+        "Completion cost": "$30",
+        "Context (tokens)": 128000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-3.5 Turbo 16k (older v1106)",
+        "ID": "openai/gpt-3.5-turbo-1106",
+        "Prompt cost": "$1",
+        "Completion cost": "$2",
+        "Context (tokens)": 16385,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Google: PaLM 2 Code Chat 32k",
+        "ID": "google/palm-2-codechat-bison-32k",
+        "Prompt cost": "$0.25",
+        "Completion cost": "$0.5",
+        "Context (tokens)": 131040,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: PaLM 2 Chat 32k",
+        "ID": "google/palm-2-chat-bison-32k",
+        "Prompt cost": "$0.25",
+        "Completion cost": "$0.5",
+        "Context (tokens)": 131040,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Airoboros 70B",
+        "ID": "jondurbin/airoboros-l2-70b",
+        "Prompt cost": "$0.5",
+        "Completion cost": "$0.5",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Xwin 70B",
+        "ID": "xwin-lm/xwin-lm-70b",
+        "Prompt cost": "$3.75",
+        "Completion cost": "$3.75",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mistral: Mistral 7B Instruct v0.1",
+        "ID": "mistralai/mistral-7b-instruct-v0.1",
+        "Prompt cost": "$0.055",
+        "Completion cost": "$0.055",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-3.5 Turbo Instruct",
+        "ID": "openai/gpt-3.5-turbo-instruct",
+        "Prompt cost": "$1.5",
+        "Completion cost": "$2",
+        "Context (tokens)": 4095,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Pygmalion: Mythalion 13B",
+        "ID": "pygmalionai/mythalion-13b",
+        "Prompt cost": "$1.125",
+        "Completion cost": "$1.125",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4 32k (older v0314)",
+        "ID": "openai/gpt-4-32k-0314",
+        "Prompt cost": "$60",
+        "Completion cost": "$120",
+        "Context (tokens)": 32767,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4 32k",
+        "ID": "openai/gpt-4-32k",
+        "Prompt cost": "$60",
+        "Completion cost": "$120",
+        "Context (tokens)": 32767,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-3.5 Turbo 16k",
+        "ID": "openai/gpt-3.5-turbo-16k",
+        "Prompt cost": "$3",
+        "Completion cost": "$4",
+        "Context (tokens)": 16385,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Nous: Hermes 13B",
+        "ID": "nousresearch/nous-hermes-llama2-13b",
+        "Prompt cost": "$0.17",
+        "Completion cost": "$0.17",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Hugging Face: Zephyr 7B (free)",
+        "ID": "huggingfaceh4/zephyr-7b-beta:free",
+        "Prompt cost": "$0",
+        "Completion cost": "$0",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Mancer: Weaver (alpha)",
+        "ID": "mancer/weaver",
+        "Prompt cost": "$1.875",
+        "Completion cost": "$2.25",
+        "Context (tokens)": 8000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Anthropic: Claude Instant v1.0",
+        "ID": "anthropic/claude-instant-1.0",
+        "Prompt cost": "$0.8",
+        "Completion cost": "$2.4",
+        "Context (tokens)": 100000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude v1.2",
+        "ID": "anthropic/claude-1.2",
+        "Prompt cost": "$8",
+        "Completion cost": "$24",
+        "Context (tokens)": 100000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude v1",
+        "ID": "anthropic/claude-1",
+        "Prompt cost": "$8",
+        "Completion cost": "$24",
+        "Context (tokens)": 100000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude Instant v1",
+        "ID": "anthropic/claude-instant-1",
+        "Prompt cost": "$0.8",
+        "Completion cost": "$2.4",
+        "Context (tokens)": 100000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude Instant v1 (self-moderated)",
+        "ID": "anthropic/claude-instant-1:beta",
+        "Prompt cost": "$0.8",
+        "Completion cost": "$2.4",
+        "Context (tokens)": 100000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Anthropic: Claude v2.0",
+        "ID": "anthropic/claude-2.0",
+        "Prompt cost": "$8",
+        "Completion cost": "$24",
+        "Context (tokens)": 100000,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "Anthropic: Claude v2.0 (self-moderated)",
+        "ID": "anthropic/claude-2.0:beta",
+        "Prompt cost": "$8",
+        "Completion cost": "$24",
+        "Context (tokens)": 100000,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "ReMM SLERP 13B",
+        "ID": "undi95/remm-slerp-l2-13b",
+        "Prompt cost": "$1.125",
+        "Completion cost": "$1.125",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "ReMM SLERP 13B (extended)",
+        "ID": "undi95/remm-slerp-l2-13b:extended",
+        "Prompt cost": "$1.125",
+        "Completion cost": "$1.125",
+        "Context (tokens)": 6144,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: PaLM 2 Code Chat",
+        "ID": "google/palm-2-codechat-bison",
+        "Prompt cost": "$0.25",
+        "Completion cost": "$0.5",
+        "Context (tokens)": 28672,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Google: PaLM 2 Chat",
+        "ID": "google/palm-2-chat-bison",
+        "Prompt cost": "$0.25",
+        "Completion cost": "$0.5",
+        "Context (tokens)": 36864,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "MythoMax 13B",
+        "ID": "gryphe/mythomax-l2-13b",
+        "Prompt cost": "$0.1",
+        "Completion cost": "$0.1",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "MythoMax 13B (nitro)",
+        "ID": "gryphe/mythomax-l2-13b:nitro",
+        "Prompt cost": "$0.2",
+        "Completion cost": "$0.2",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "MythoMax 13B (extended)",
+        "ID": "gryphe/mythomax-l2-13b:extended",
+        "Prompt cost": "$1.125",
+        "Completion cost": "$1.125",
+        "Context (tokens)": 8192,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "Meta: Llama v2 13B Chat",
+        "ID": "meta-llama/llama-2-13b-chat",
+        "Prompt cost": "$0.27",
+        "Completion cost": "$0.27",
+        "Context (tokens)": 4096,
+        "Moderation": "None"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4 (older v0314)",
+        "ID": "openai/gpt-4-0314",
+        "Prompt cost": "$30",
+        "Completion cost": "$60",
+        "Context (tokens)": 8191,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-4",
+        "ID": "openai/gpt-4",
+        "Prompt cost": "$30",
+        "Completion cost": "$60",
+        "Context (tokens)": 8191,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-3.5 Turbo (older v0301)",
+        "ID": "openai/gpt-3.5-turbo-0301",
+        "Prompt cost": "$1",
+        "Completion cost": "$2",
+        "Context (tokens)": 4095,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-3.5 Turbo 16k",
+        "ID": "openai/gpt-3.5-turbo-0125",
+        "Prompt cost": "$0.5",
+        "Completion cost": "$1.5",
+        "Context (tokens)": 16385,
+        "Moderation": "Moderated"
+    },
+    {
+        "Model Name": "OpenAI: GPT-3.5 Turbo",
+        "ID": "openai/gpt-3.5-turbo",
+        "Prompt cost": "$0.5",
+        "Completion cost": "$1.5",
+        "Context (tokens)": 16385,
+        "Moderation": "Moderated"
+    }
+]
