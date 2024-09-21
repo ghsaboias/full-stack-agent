@@ -148,7 +148,7 @@ function App() {
               <div className="message-stats">
                 <p>Prompt Tokens: {message.tokens_prompt}</p>
                 <p>Completion Tokens: {message.tokens_completion}</p>
-                <p>Total Cost: ${message.total_cost.toFixed(6)}</p>
+                <p>Total Cost: {message.total_cost !== null ? `$${message.total_cost.toFixed(6)}` : 'N/A'}</p>
               </div>
             )}
           </div>
