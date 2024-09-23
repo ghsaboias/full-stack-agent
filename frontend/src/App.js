@@ -2,13 +2,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { FaCopy } from 'react-icons/fa';
+import { FaCopy, FaImage, FaTimes } from 'react-icons/fa';
+// Add the following import
+import ReactMarkdown from 'react-markdown';
 
 function App() {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
   const chatContainerRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     fetchChatHistory();
@@ -29,7 +33,8 @@ function App() {
         content: msg.content,
         tokens_prompt: msg.tokens_prompt,
         tokens_completion: msg.tokens_completion,
-        total_cost: msg.total_cost
+        total_cost: msg.total_cost,
+        imageUrl: msg.image_data  // Add this line
       })));
     } catch (error) {
       console.error('Error fetching chat history:', error);
@@ -37,16 +42,18 @@ function App() {
   };
 
   const sendMessage = async () => {
-    if (!message.trim()) return;
+    if (!message.trim() && !imageUrl) return;
     setIsLoading(true);
     const userMessage = message;
-    setChat(prevChat => [...prevChat, { role: 'user', content: userMessage }]);
+    setChat(prevChat => [...prevChat, { role: 'user', content: userMessage, imageUrl }]);
     setMessage('');
+    setImageUrl('');
     try {
+      console.log("Sending image data:", imageUrl ? imageUrl.substring(0, 50) + "..." : "No image");
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ message: userMessage })
+        body: JSON.stringify({ message: userMessage, image_data: imageUrl })
       });
       const data = await response.json();
       if (!response.ok) {
@@ -69,6 +76,26 @@ function App() {
       setChat(prevChat => [...prevChat, { role: 'assistant', content: `Error: ${errorMessage}` }]);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Data = reader.result;
+        setImageUrl(base64Data);
+        console.log("Image encoded as base64:", base64Data.substring(0, 50) + "...");
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setImageUrl('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
@@ -108,14 +135,26 @@ function App() {
     let lastIndex = 0;
     let match;
 
+    if (message.imageUrl) {
+      parts.push(
+        <div className="message-image" key="image">
+          <img src={message.imageUrl} alt="User uploaded" />
+        </div>
+      );
+    }
+
     while ((match = codeBlockRegex.exec(message.content)) !== null) {
       if (match.index > lastIndex) {
-        parts.push(message.content.slice(lastIndex, match.index));
+        parts.push(
+          <ReactMarkdown key={`md-${match.index}`}>
+            {message.content.slice(lastIndex, match.index)}
+          </ReactMarkdown>
+        );
       }
       const language = match[1];
       const code = match[2].trim();
       parts.push(
-        <div className="code-block" key={match.index}>
+        <div className="code-block" key={`code-${match.index}`}>
           <div className="code-header">
             <span>{language}</span>
             <button onClick={() => copyToClipboard(code)} className="copy-button">
@@ -131,7 +170,11 @@ function App() {
     }
 
     if (lastIndex < message.content.length) {
-      parts.push(message.content.slice(lastIndex));
+      parts.push(
+        <ReactMarkdown key={`md-last`}>
+          {message.content.slice(lastIndex)}
+        </ReactMarkdown>
+      );
     }
 
     return parts;
@@ -140,7 +183,7 @@ function App() {
   return (
     <div className="container">
       <h1 className="header">AI Chatbot</h1>
-      <div className="chat-container" ref={chatContainerRef}>
+      <div className={`chat-container ${chat.length > 0 ? 'visible' : ''}`} ref={chatContainerRef}>
         {chat.map((message, index) => (
           <div key={index} className={`message ${message.role}-message`}>
             <div className="message-content">{renderMessage(message)}</div>
@@ -164,6 +207,16 @@ function App() {
           onKeyDown={handleKeyPress}
           placeholder="Type your message..."
         />
+        <label className="image-upload-label">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: 'none' }}
+            ref={fileInputRef}
+          />
+          <FaImage />
+        </label>
         <button 
           className="send-button" 
           onClick={sendMessage} 
@@ -172,6 +225,14 @@ function App() {
           Send
         </button>
       </div>
+      {imageUrl && (
+        <div className="image-preview">
+          <img src={imageUrl} alt="Preview" />
+          <button onClick={removeImage} className="remove-image">
+            <FaTimes />
+          </button>
+        </div>
+      )}
       <button 
         className="reset-button" 
         onClick={resetChat}
