@@ -9,8 +9,6 @@ import os
 import time
 import logging
 import requests
-import base64
-import httpx
 
 app = Flask(__name__)
 CORS(app)
