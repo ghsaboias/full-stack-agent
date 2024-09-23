@@ -3,7 +3,6 @@ import './App.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { FaCopy, FaImage, FaTimes } from 'react-icons/fa';
-// Add the following import
 import ReactMarkdown from 'react-markdown';
 
 function App() {
@@ -34,7 +33,7 @@ function App() {
         tokens_prompt: msg.tokens_prompt,
         tokens_completion: msg.tokens_completion,
         total_cost: msg.total_cost,
-        imageUrl: msg.image_data  // Add this line
+        imageUrl: msg.image_data
       })));
     } catch (error) {
       console.error('Error fetching chat history:', error);

@@ -18,16 +18,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chat_history.db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# Initialize OpenAI client for OpenRouter
 openrouter_client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
     api_key=os.getenv("OPENROUTER_API_KEY"),
 )
 
-# Initialize Anthropic client
 anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
-# Set up logging
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
@@ -40,7 +37,7 @@ class ChatMessage(db.Model):
     tokens_prompt = db.Column(db.Integer)
     tokens_completion = db.Column(db.Integer)
     total_cost = db.Column(db.Float)
-    image_data = db.Column(db.Text)  # New field for storing image data
+    image_data = db.Column(db.Text)
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
@@ -60,7 +57,6 @@ def chat():
         chat_history = ChatMessage.query.order_by(ChatMessage.timestamp).all()
         
         if 'claude' in model:
-            # Format messages for Anthropic API
             formatted_messages = []
             for msg in chat_history:
                 if not formatted_messages or formatted_messages[-1]['role'] != msg.role:
@@ -68,7 +64,6 @@ def chat():
                 else:
                     formatted_messages[-1]['content'] += f"\n\n{msg.content}"
             
-            # Add image to the last user message if provided
             if image_data:
                 image_content = {
                     "type": "image",
@@ -99,7 +94,6 @@ def chat():
             bot_message = response.content[0].text
             generation_id = response.id
             
-            # Calculate cost based on the model
             input_cost, output_cost = get_claude_costs(model)
             total_cost = (response.usage.input_tokens / 1000000 * input_cost) + (response.usage.output_tokens / 1000000 * output_cost)
             
@@ -170,7 +164,7 @@ def get_claude_costs(model):
         'claude-3-sonnet-20240229': (3.00, 15.00),
         'claude-3-haiku-20240307': (0.25, 1.25)
     }
-    return costs.get(model, (0, 0))  # Default to (0, 0) if model not found
+    return costs.get(model, (0, 0))
 
 @app.route('/api/chat_history', methods=['GET'])
 def get_chat_history():
