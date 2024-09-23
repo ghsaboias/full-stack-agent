@@ -9,6 +9,8 @@ import os
 import time
 import logging
 import requests
+import base64
+import httpx
 
 app = Flask(__name__)
 CORS(app)
@@ -38,16 +40,20 @@ class ChatMessage(db.Model):
     tokens_prompt = db.Column(db.Integer)
     tokens_completion = db.Column(db.Integer)
     total_cost = db.Column(db.Float)
+    image_data = db.Column(db.Text)  # New field for storing image data
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
     try:
         user_message = request.json.get('message')
         model = request.json.get('model', 'claude-3-haiku-20240307')
-        if not user_message:
-            return jsonify({"error": "No message provided"}), 400
+        image_data = request.json.get('image_data')
+        print("Received image data:", image_data[:50] + "..." if image_data else "No image")
+        
+        if not user_message and not image_data:
+            return jsonify({"error": "No message or image provided"}), 400
 
-        new_user_message = ChatMessage(role='user', content=user_message)
+        new_user_message = ChatMessage(role='user', content=user_message or "", image_data=image_data)
         db.session.add(new_user_message)
         db.session.commit()
 
@@ -62,15 +68,32 @@ def chat():
                 else:
                     formatted_messages[-1]['content'] += f"\n\n{msg.content}"
             
-            # Ensure the last message is from the user
-            if formatted_messages[-1]['role'] != 'user':
-                formatted_messages.append({"role": "user", "content": user_message})
+            # Add image to the last user message if provided
+            if image_data:
+                image_content = {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": "image/png",  # Adjust if needed
+                        "data": image_data.split(',')[1] if ',' in image_data else image_data,
+                    },
+                }
+                
+                if formatted_messages[-1]['role'] == 'user':
+                    if isinstance(formatted_messages[-1]['content'], str):
+                        formatted_messages[-1]['content'] = [{"type": "text", "text": formatted_messages[-1]['content']}]
+                    formatted_messages[-1]['content'].append(image_content)
+                else:
+                    formatted_messages.append({"role": "user", "content": [image_content]})
+                
+                if user_message:
+                    formatted_messages[-1]['content'].append({"type": "text", "text": user_message})
             
             response = anthropic_client.messages.create(
                 model=model,
                 max_tokens=2000,
                 messages=formatted_messages,
-                system="You are an AI assistant. Respond helpfully, but do not reproduce copyrighted material."
+                system="You are an AI assistant."
             )
             
             bot_message = response.content[0].text
@@ -86,7 +109,7 @@ def chat():
                 'total_cost': total_cost
             }
         else:
-            # Use OpenRouter for other models
+            # Use OpenRouter for other models (no image support)
             messages = [{"role": msg.role, "content": msg.content} for msg in chat_history]
             messages.append({"role": "user", "content": user_message})
             messages.insert(0, {"role": "system", "content": "You are an AI assistant."})
@@ -158,7 +181,8 @@ def get_chat_history():
             "content": msg.content,
             "tokens_prompt": msg.tokens_prompt,
             "tokens_completion": msg.tokens_completion,
-            "total_cost": msg.total_cost
+            "total_cost": msg.total_cost,
+            "image_data": msg.image_data
         }
         for msg in messages
     ])
