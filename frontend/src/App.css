@@ -268,3 +268,52 @@ body {
   border-radius: 3px;
   font-family: 'Courier New', Courier, monospace;
 }
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.analysis-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.analysis-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.silver-analysis {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.silver-analysis h3 {
+  margin-top: 0;
+}
+
+.silver-analysis img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.loading-analysis {
+  text-align: center;
+  margin-top: 20px;
+  font-style: italic;
+  color: #666;
+}

@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_migrate import Migrate
 from openai import OpenAI
 import anthropic
@@ -9,6 +9,12 @@ import os
 import time
 import logging
 import requests
+import yfinance as yf
+import pandas as pd
+import matplotlib.pyplot as plt
+import io
+import base64
+import numpy as np
 
 app = Flask(__name__)
 CORS(app)
@@ -202,6 +208,55 @@ def clear_database():
         db.drop_all()
         db.create_all()
     print("Database cleared and recreated.")
+
+# Add the new functions for silver data analysis
+def fetch_silver_data(start_date, end_date):
+    silver = yf.Ticker("SI=F")
+    data = silver.history(start=start_date, end=end_date)
+    return data['Close']
+
+def calculate_daily_changes(prices):
+    return prices.pct_change().dropna()
+
+def compare_todays_change(changes):
+    today_change = changes.iloc[-1]
+    historical_changes = changes.iloc[:-1]
+    
+    percentile = (historical_changes < today_change).mean() * 100
+    
+    return today_change, percentile
+
+def generate_histogram_data(changes):
+    hist, bin_edges = np.histogram(changes.iloc[:-1], bins=50)
+    return {
+        "counts": hist.tolist(),
+        "bin_edges": bin_edges.tolist(),
+        "today_change": float(changes.iloc[-1])
+    }
+
+# Add a new route for silver data analysis
+@app.route('/api/silver_analysis', methods=['GET'])
+def silver_analysis():
+    try:
+        end_date = datetime.now()
+        start_date = end_date - timedelta(days=365*30)
+        
+        prices = fetch_silver_data(start_date, end_date)
+        print(prices)
+        changes = calculate_daily_changes(prices)
+        
+        today_change, percentile = compare_todays_change(changes)
+        
+        histogram_data = generate_histogram_data(changes)
+        
+        return jsonify({
+            "today_change": float(today_change),
+            "percentile": float(percentile),
+            "histogram_data": histogram_data
+        })
+    except Exception as e:
+        logger.error(f"Error in silver analysis: {str(e)}", exc_info=True)
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 if __name__ == '__main__':
     clear_database()
