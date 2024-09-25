@@ -317,3 +317,64 @@ body {
   font-style: italic;
   color: #666;
 }
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.conversation-panel {
+  width: 250px;
+  background-color: #f0f2f5;
+  padding: 20px;
+  overflow-y: auto;
+  border-right: 1px solid #e0e0e0;
+}
+
+.main-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.new-conversation-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+.conversation-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.conversation-item.active {
+  background-color: #e7f3ff;
+}
+
+.delete-conversation-btn {
+  background: none;
+  border: none;
+  color: #65676b;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.delete-conversation-btn:hover {
+  color: #ff4d4f;
+}

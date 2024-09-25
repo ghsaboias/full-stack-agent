@@ -1,6 +1,6 @@
 import Chart from 'chart.js/auto';
 import React, { useEffect, useRef, useState } from 'react';
-import { FaChartBar, FaCopy, FaImage, FaTimes } from 'react-icons/fa';
+import { FaChartBar, FaCopy, FaImage, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -15,9 +15,11 @@ function App() {
   const [isAnalysisLoading, setIsAnalysisLoading] = useState(false);
   const chatContainerRef = useRef(null);
   const fileInputRef = useRef(null);
+  const [conversations, setConversations] = useState([]);
+  const [activeConversation, setActiveConversation] = useState(null);
 
   useEffect(() => {
-    fetchChatHistory();
+    fetchConversations();
   }, []);
 
   useEffect(() => {
@@ -26,9 +28,23 @@ function App() {
     }
   }, [chat]);
 
-  const fetchChatHistory = async () => {
+  const fetchConversations = async () => {
     try {
-      const response = await fetch('/api/chat_history');
+      const response = await fetch('/api/conversations');
+      const data = await response.json();
+      setConversations(data);
+      if (data.length > 0) {
+        setActiveConversation(data[0].id);
+        fetchChatHistory(data[0].id);
+      }
+    } catch (error) {
+      console.error('Error fetching conversations:', error);
+    }
+  };
+
+  const fetchChatHistory = async (conversationId) => {
+    try {
+      const response = await fetch(`/api/chat_history/${conversationId}`);
       const data = await response.json();
       setChat(data.map(msg => ({
         role: msg.role,
@@ -40,6 +56,37 @@ function App() {
       })));
     } catch (error) {
       console.error('Error fetching chat history:', error);
+    }
+  };
+
+  const createNewConversation = async () => {
+    try {
+      const response = await fetch('/api/conversations', { method: 'POST' });
+      const newConversation = await response.json();
+      setConversations([...conversations, newConversation]);
+      setActiveConversation(newConversation.id);
+      setChat([]);
+    } catch (error) {
+      console.error('Error creating new conversation:', error);
+    }
+  };
+
+  const deleteConversation = async (id) => {
+    try {
+      await fetch(`/api/conversations/${id}`, { method: 'DELETE' });
+      setConversations(conversations.filter(conv => conv.id !== id));
+      if (activeConversation === id) {
+        const newActive = conversations.find(conv => conv.id !== id);
+        if (newActive) {
+          setActiveConversation(newActive.id);
+          fetchChatHistory(newActive.id);
+        } else {
+          setActiveConversation(null);
+          setChat([]);
+        }
+      }
+    } catch (error) {
+      console.error('Error deleting conversation:', error);
     }
   };
 
@@ -55,7 +102,7 @@ function App() {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ message: userMessage, image_data: imageUrl })
+        body: JSON.stringify({ message: userMessage, image_data: imageUrl, conversation_id: activeConversation })
       });
       const data = await response.json();
       if (!response.ok) {
@@ -256,79 +303,107 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <h1 className="header">AI Chatbot</h1>
-      <div className={`chat-container ${chat.length > 0 ? 'visible' : ''}`} ref={chatContainerRef}>
-        {chat.map((message, index) => (
-          <div key={index} className={`message ${message.role}-message`}>
-            <div className="message-content">{renderMessage(message)}</div>
-            {message.role === 'assistant' && message.tokens_prompt && (
-              <div className="message-stats">
-                <p>Prompt Tokens: {message.tokens_prompt}</p>
-                <p>Completion Tokens: {message.tokens_completion}</p>
-                <p>Total Cost: {message.total_cost !== null ? `$${message.total_cost.toFixed(6)}` : 'N/A'}</p>
-              </div>
-            )}
+    <div className="app-container">
+      <div className="conversation-panel">
+        <button onClick={createNewConversation} className="new-conversation-btn">
+          <FaPlus /> New Conversation
+        </button>
+        {conversations.map(conv => (
+          <div 
+            key={conv.id} 
+            className={`conversation-item ${activeConversation === conv.id ? 'active' : ''}`}
+            onClick={() => {
+              setActiveConversation(conv.id);
+              fetchChatHistory(conv.id);
+            }}
+          >
+            {conv.name || `Conversation ${conv.id}`}
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteConversation(conv.id);
+              }} 
+              className="delete-conversation-btn"
+            >
+              <FaTrash />
+            </button>
           </div>
         ))}
-        {isLoading && <div className="message bot-message loading">Bot is thinking...</div>}
       </div>
-      <div className="input-container">
-        <input 
-          className="input"
-          type="text" 
-          value={message} 
-          onChange={e => setMessage(e.target.value)} 
-          onKeyDown={handleKeyPress}
-          placeholder="Type your message..."
-        />
-        <label className="image-upload-label">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            style={{ display: 'none' }}
-            ref={fileInputRef}
+      <div className="main-content">
+        <h1 className="header">AI Chatbot</h1>
+        <div className={`chat-container ${chat.length > 0 ? 'visible' : ''}`} ref={chatContainerRef}>
+          {chat.map((message, index) => (
+            <div key={index} className={`message ${message.role}-message`}>
+              <div className="message-content">{renderMessage(message)}</div>
+              {message.role === 'assistant' && message.tokens_prompt && (
+                <div className="message-stats">
+                  <p>Prompt Tokens: {message.tokens_prompt}</p>
+                  <p>Completion Tokens: {message.tokens_completion}</p>
+                  <p>Total Cost: {message.total_cost !== null ? `$${message.total_cost.toFixed(6)}` : 'N/A'}</p>
+                </div>
+              )}
+            </div>
+          ))}
+          {isLoading && <div className="message bot-message loading">Bot is thinking...</div>}
+        </div>
+        <div className="input-container">
+          <input 
+            className="input"
+            type="text" 
+            value={message} 
+            onChange={e => setMessage(e.target.value)} 
+            onKeyDown={handleKeyPress}
+            placeholder="Type your message..."
           />
-          <FaImage />
-        </label>
-        <button 
-          className="send-button" 
-          onClick={sendMessage} 
-          disabled={isLoading}
-        >
-          Send
-        </button>
-      </div>
-      {imageUrl && (
-        <div className="image-preview">
-          <img src={imageUrl} alt="Preview" />
-          <button onClick={removeImage} className="remove-image">
-            <FaTimes />
+          <label className="image-upload-label">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+            />
+            <FaImage />
+          </label>
+          <button 
+            className="send-button" 
+            onClick={sendMessage} 
+            disabled={isLoading}
+          >
+            Send
           </button>
         </div>
-      )}
-      <div className="action-buttons">
-        <button 
-          className="reset-button" 
-          onClick={resetChat}
-          disabled={isLoading}
-        >
-          Reset Chat
-        </button>
-        <button 
-          className="analysis-button" 
-          onClick={fetchSilverAnalysis}
-          disabled={isAnalysisLoading}
-        >
-          <FaChartBar /> Analyze Silver Prices
-        </button>
+        {imageUrl && (
+          <div className="image-preview">
+            <img src={imageUrl} alt="Preview" />
+            <button onClick={removeImage} className="remove-image">
+              <FaTimes />
+            </button>
+          </div>
+        )}
+        <div className="action-buttons">
+          <button 
+            className="reset-button" 
+            onClick={resetChat}
+            disabled={isLoading}
+          >
+            Reset Chat
+          </button>
+          <button 
+            className="analysis-button" 
+            onClick={fetchSilverAnalysis}
+            disabled={isAnalysisLoading}
+          >
+            <FaChartBar /> Analyze Silver Prices
+          </button>
+        </div>
+        {isAnalysisLoading ? (
+          <div className="loading-analysis">Loading silver analysis...</div>
+        ) : (
+          renderSilverAnalysis()
+        )}
       </div>
-      {isAnalysisLoading ? (
-        <div className="loading-analysis">Loading silver analysis...</div>
-      ) : (
-        renderSilverAnalysis()
-      )}
     </div>
   );
 }

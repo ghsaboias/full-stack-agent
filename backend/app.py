@@ -32,8 +32,14 @@ anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
+class Conversation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 class ChatMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    conversation_id = db.Column(db.Integer, db.ForeignKey('conversation.id'), nullable=False)
     role = db.Column(db.String(10), nullable=False)
     content = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
@@ -43,22 +49,54 @@ class ChatMessage(db.Model):
     total_cost = db.Column(db.Float)
     image_data = db.Column(db.Text)
 
+@app.route('/api/conversations', methods=['GET'])
+def get_conversations():
+    conversations = Conversation.query.order_by(Conversation.created_at.desc()).all()
+    return jsonify([{"id": conv.id, "name": conv.name} for conv in conversations])
+
+@app.route('/api/conversations', methods=['POST'])
+def create_conversation():
+    new_conversation = Conversation(name=f"Conversation {Conversation.query.count() + 1}")
+    db.session.add(new_conversation)
+    db.session.commit()
+    return jsonify({"id": new_conversation.id, "name": new_conversation.name})
+
+@app.route('/api/conversations/<int:conversation_id>', methods=['DELETE'])
+def delete_conversation(conversation_id):
+    conversation = Conversation.query.get_or_404(conversation_id)
+    ChatMessage.query.filter_by(conversation_id=conversation_id).delete()
+    db.session.delete(conversation)
+    db.session.commit()
+    return jsonify({"status": "success"})
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
     try:
         user_message = request.json.get('message')
         model = request.json.get('model', 'claude-3-haiku-20240307')
         image_data = request.json.get('image_data')
-        print("Received image data:", image_data[:50] + "..." if image_data else "No image")
+        conversation_id = request.json.get('conversation_id')
         
         if not user_message and not image_data:
             return jsonify({"error": "No message or image provided"}), 400
 
-        new_user_message = ChatMessage(role='user', content=user_message or "", image_data=image_data)
+        # If no conversation_id is provided, create a new conversation
+        if not conversation_id:
+            new_conversation = Conversation(name=f"Conversation {Conversation.query.count() + 1}")
+            db.session.add(new_conversation)
+            db.session.commit()
+            conversation_id = new_conversation.id
+
+        new_user_message = ChatMessage(
+            conversation_id=conversation_id,
+            role='user',
+            content=user_message or "",
+            image_data=image_data
+        )
         db.session.add(new_user_message)
         db.session.commit()
 
-        chat_history = ChatMessage.query.order_by(ChatMessage.timestamp).all()
+        chat_history = ChatMessage.query.filter_by(conversation_id=conversation_id).order_by(ChatMessage.timestamp).all()
         
         if 'claude' in model:
             formatted_messages = []
@@ -143,6 +181,7 @@ def chat():
                 stats = {'tokens_prompt': None, 'tokens_completion': None, 'total_cost': None}
 
         new_message = ChatMessage(
+            conversation_id=conversation_id,
             role='assistant',
             content=bot_message,
             generation_id=generation_id,
@@ -158,6 +197,7 @@ def chat():
             "generation_stats": stats
         })
     except Exception as e:
+        db.session.rollback()  # Rollback the session in case of any error
         logger.error(f"Error in chat endpoint: {str(e)}", exc_info=True)
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
@@ -170,9 +210,9 @@ def get_claude_costs(model):
     }
     return costs.get(model, (0, 0))
 
-@app.route('/api/chat_history', methods=['GET'])
-def get_chat_history():
-    messages = ChatMessage.query.order_by(ChatMessage.timestamp).all()
+@app.route('/api/chat_history/<int:conversation_id>', methods=['GET'])
+def get_chat_history(conversation_id):
+    messages = ChatMessage.query.filter_by(conversation_id=conversation_id).order_by(ChatMessage.timestamp).all()
     return jsonify([
         {
             "role": msg.role,
@@ -185,29 +225,19 @@ def get_chat_history():
         for msg in messages
     ])
 
-@app.route('/api/chat_history', methods=['POST'])
-def save_chat_message():
-    data = request.json
-    new_message = ChatMessage(role=data['role'], content=data['content'])
-    db.session.add(new_message)
-    db.session.commit()
-    return jsonify({"status": "success"})
-
 @app.route('/api/chat_history/reset', methods=['POST'])
 def reset_chat_history():
     try:
-        ChatMessage.query.delete()
+        conversation_id = request.json.get('conversation_id')
+        if conversation_id:
+            ChatMessage.query.filter_by(conversation_id=conversation_id).delete()
+        else:
+            ChatMessage.query.delete()
         db.session.commit()
         return jsonify({"status": "success", "message": "Chat history reset successfully"})
     except Exception as e:
         db.session.rollback()
         return jsonify({"status": "error", "message": str(e)}), 500
-
-def clear_database():
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
-    print("Database cleared and recreated.")
 
 # Add the new functions for silver data analysis
 def fetch_silver_data(start_date, end_date):
@@ -258,6 +288,21 @@ def silver_analysis():
         logger.error(f"Error in silver analysis: {str(e)}", exc_info=True)
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
+@app.before_first_request
+def initialize_data():
+    with app.app_context():
+        # Create a default conversation if it doesn't exist
+        default_conversation = Conversation.query.filter_by(name="Default Conversation").first()
+        if not default_conversation:
+            default_conversation = Conversation(name="Default Conversation")
+            db.session.add(default_conversation)
+            db.session.commit()
+
+        # Assign the default conversation to all messages without a conversation
+        ChatMessage.query.filter_by(conversation_id=None).update({ChatMessage.conversation_id: default_conversation.id})
+        db.session.commit()
+
 if __name__ == '__main__':
-    clear_database()
+    with app.app_context():
+        db.create_all()
     app.run(port=5000)
