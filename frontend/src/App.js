@@ -1,6 +1,5 @@
-import Chart from 'chart.js/auto';
 import React, { useEffect, useRef, useState } from 'react';
-import { FaChartBar, FaCopy, FaImage, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
+import { FaCopy, FaImage, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -11,12 +10,11 @@ function App() {
   const [chat, setChat] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  const [silverAnalysis, setSilverAnalysis] = useState(null);
-  const [isAnalysisLoading, setIsAnalysisLoading] = useState(false);
   const chatContainerRef = useRef(null);
   const fileInputRef = useRef(null);
   const [conversations, setConversations] = useState([]);
   const [activeConversation, setActiveConversation] = useState(null);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   useEffect(() => {
     fetchConversations();
@@ -157,7 +155,11 @@ function App() {
 
   const resetChat = async () => {
     try {
-      const response = await fetch('/api/chat_history/reset', { method: 'POST' });
+      const response = await fetch('/api/chat_history/reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ conversation_id: activeConversation })
+      });
       const data = await response.json();
       if (data.status === 'success') {
         setChat([]);
@@ -176,79 +178,6 @@ function App() {
     }).catch(err => {
       console.error('Failed to copy: ', err);
     });
-  };
-
-  const fetchSilverAnalysis = async () => {
-    setIsAnalysisLoading(true);
-    try {
-      const response = await fetch('/api/silver_analysis');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setSilverAnalysis(data);
-      renderHistogram(data.histogram_data);
-    } catch (error) {
-      console.error('Error fetching silver analysis:', error);
-      alert('Failed to fetch silver analysis. Please try again.');
-    } finally {
-      setIsAnalysisLoading(false);
-    }
-  };
-
-  const renderHistogram = (histogramData) => {
-    const ctx = document.getElementById('silverHistogram');
-    if (ctx) {
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: histogramData.bin_edges.slice(0, -1).map(edge => edge.toFixed(4)),
-          datasets: [{
-            label: 'Frequency',
-            data: histogramData.counts,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          plugins: {
-            annotation: {
-              annotations: {
-                line1: {
-                  type: 'line',
-                  yMin: 0,
-                  yMax: Math.max(...histogramData.counts),
-                  xMin: histogramData.today_change,
-                  xMax: histogramData.today_change,
-                  borderColor: 'rgb(255, 99, 132)',
-                  borderWidth: 2,
-                }
-              }
-            }
-          }
-        }
-      });
-    }
-  };
-
-  const renderSilverAnalysis = () => {
-    if (!silverAnalysis) return null;
-
-    return (
-      <div className="silver-analysis">
-        <h3>Silver Price Analysis</h3>
-        <p>Today's change: {(silverAnalysis.today_change * 100).toFixed(2)}%</p>
-        <p>This change is greater than {silverAnalysis.percentile.toFixed(2)}% of historical daily changes.</p>
-        <canvas id="silverHistogram"></canvas>
-      </div>
-    );
   };
 
   const renderMessage = (message) => {
@@ -292,19 +221,26 @@ function App() {
     }
 
     if (lastIndex < message.content.length) {
-      parts.push(
-        <ReactMarkdown key={`md-last`}>
-          {message.content.slice(lastIndex)}
-        </ReactMarkdown>
-      );
+        if (message.content.includes("current price")) {
+            parts.push(<div key="financial-data" className="financial-data">{message.content}</div>);
+        } else {
+            parts.push(<ReactMarkdown key={`md-last`}>{message.content.slice(lastIndex)}</ReactMarkdown>);
+        }
     }
+
 
     return parts;
   };
 
   return (
     <div className="app-container">
-      <div className="conversation-panel">
+      <button 
+        className="mobile-toggle" 
+        onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+      >
+        {isSidebarVisible ? 'Hide Conversations' : 'Show Conversations'}
+      </button>
+      <div className={`conversation-panel ${isSidebarVisible ? '' : 'hidden'}`}>
         <button onClick={createNewConversation} className="new-conversation-btn">
           <FaPlus /> New Conversation
         </button>
@@ -390,19 +326,7 @@ function App() {
           >
             Reset Chat
           </button>
-          <button 
-            className="analysis-button" 
-            onClick={fetchSilverAnalysis}
-            disabled={isAnalysisLoading}
-          >
-            <FaChartBar /> Analyze Silver Prices
-          </button>
         </div>
-        {isAnalysisLoading ? (
-          <div className="loading-analysis">Loading silver analysis...</div>
-        ) : (
-          renderSilverAnalysis()
-        )}
       </div>
     </div>
   );

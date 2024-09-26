@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timedelta
+from datetime import datetime
 from flask_migrate import Migrate
 from openai import OpenAI
 import anthropic
@@ -10,15 +10,11 @@ import time
 import logging
 import requests
 import yfinance as yf
-import pandas as pd
-import matplotlib.pyplot as plt
-import io
-import base64
-import numpy as np
 
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chat_history.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -32,6 +28,7 @@ anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
+# Model definitions
 class Conversation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -49,6 +46,50 @@ class ChatMessage(db.Model):
     total_cost = db.Column(db.Float)
     image_data = db.Column(db.Text)
 
+# Tools
+tools = [
+    {
+        "name": "fetch_stock_data",
+        "description": "A function that fetches the current stock price for a given ticker symbol.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "ticker": {
+                    "type": "string",
+                    "description": "The stock ticker symbol."
+                }
+            },
+            "required": ["ticker"]
+        }
+    }
+]
+
+# Helper functions
+def get_claude_costs(model):
+    costs = {
+        'claude-3-5-sonnet-20240620': (3.00, 15.00),
+        'claude-3-opus-20240229': (15.00, 75.00),
+        'claude-3-sonnet-20240229': (3.00, 15.00),
+        'claude-3-haiku-20240307': (0.25, 1.25)
+    }
+    return costs.get(model, (0, 0))
+
+def fetch_stock_data(ticker): 
+    try:
+        stock = yf.Ticker(ticker)
+        stock_info = stock.info
+        return f"Here's the full stock information for {ticker}:\n{stock_info}"
+    except Exception as e:
+        return f"Error fetching data for {ticker}: {str(e)}"
+
+def process_tool_call(tool_name, tool_input):
+    if tool_name == "fetch_stock_data":
+        ticker = tool_input["ticker"]
+        return fetch_stock_data(ticker)
+    else:
+        return f"Unsupported tool: {tool_name}"
+
+# Routes
 @app.route('/api/conversations', methods=['GET'])
 def get_conversations():
     conversations = Conversation.query.order_by(Conversation.created_at.desc()).all()
@@ -76,11 +117,13 @@ def chat():
         model = request.json.get('model', 'claude-3-haiku-20240307')
         image_data = request.json.get('image_data')
         conversation_id = request.json.get('conversation_id')
+        generation_id = None
+        
+        print(f"Received request - Message: {user_message}, Model: {model}, Conversation ID: {conversation_id}")
         
         if not user_message and not image_data:
             return jsonify({"error": "No message or image provided"}), 400
 
-        # If no conversation_id is provided, create a new conversation
         if not conversation_id:
             new_conversation = Conversation(name=f"Conversation {Conversation.query.count() + 1}")
             db.session.add(new_conversation)
@@ -111,7 +154,7 @@ def chat():
                     "type": "image",
                     "source": {
                         "type": "base64",
-                        "media_type": "image/png",  # Adjust if needed
+                        "media_type": "image/png",
                         "data": image_data.split(',')[1] if ',' in image_data else image_data,
                     },
                 }
@@ -126,16 +169,50 @@ def chat():
                 if user_message:
                     formatted_messages[-1]['content'].append({"type": "text", "text": user_message})
             
+            print(f"Sending request to Claude API with {len(formatted_messages)} messages")
             response = anthropic_client.messages.create(
                 model=model,
                 max_tokens=2000,
                 messages=formatted_messages,
-                system="You are an AI assistant."
+                tools=tools
             )
-            
-            bot_message = response.content[0].text
-            generation_id = response.id
-            
+            print(f"Claude response: {response}")
+
+            if response.stop_reason == 'tool_use':
+                tool_use = next((block for block in response.content if block.type == "tool_use"), None)
+                if tool_use:
+                    tool_name = tool_use.name
+                    tool_input = tool_use.input
+
+                    tool_result = process_tool_call(tool_name, tool_input)
+                    
+                    follow_up_response = anthropic_client.messages.create(
+                        model=model,
+                        max_tokens=2000,
+                        messages=[
+                            *formatted_messages,
+                            {"role": "assistant", "content": response.content},
+                            {
+                                "role": "user",
+                                "content": [
+                                    {
+                                        "type": "tool_result",
+                                        "tool_use_id": tool_use.id,
+                                    "content": tool_result
+                                    }
+                                ]
+                            }
+                        ],
+                        system="You are an AI assistant. Provide a concise and informative response based on the provided information.",
+                        tools=tools
+                    )
+                    
+                    bot_message = follow_up_response.content[0].text + "\n"
+            else:
+                bot_message = response.content[0].text + "\n"
+            bot_message = bot_message.strip()
+
+            print(f"Calculating costs for model: {model}")
             input_cost, output_cost = get_claude_costs(model)
             total_cost = (response.usage.input_tokens / 1000000 * input_cost) + (response.usage.output_tokens / 1000000 * output_cost)
             
@@ -144,8 +221,8 @@ def chat():
                 'tokens_completion': response.usage.output_tokens,
                 'total_cost': total_cost
             }
+            print(f"Generation stats: {stats}")
         else:
-            # Use OpenRouter for other models (no image support)
             messages = [{"role": msg.role, "content": msg.content} for msg in chat_history]
             messages.append({"role": "user", "content": user_message})
             messages.insert(0, {"role": "system", "content": "You are an AI assistant."})
@@ -180,6 +257,7 @@ def chat():
                 logger.error(f"Error fetching generation stats: {str(stats_error)}")
                 stats = {'tokens_prompt': None, 'tokens_completion': None, 'total_cost': None}
 
+        print(f"Saving new message to database: {bot_message[:50]}...")
         new_message = ChatMessage(
             conversation_id=conversation_id,
             role='assistant',
@@ -192,23 +270,16 @@ def chat():
         db.session.add(new_message)
         db.session.commit()
         
+        print("Returning response to client")
         return jsonify({
             "message": bot_message,
             "generation_stats": stats
         })
     except Exception as e:
-        db.session.rollback()  # Rollback the session in case of any error
+        db.session.rollback()
         logger.error(f"Error in chat endpoint: {str(e)}", exc_info=True)
+        print(f"Error occurred: {str(e)}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
-
-def get_claude_costs(model):
-    costs = {
-        'claude-3-5-sonnet-20240620': (3.00, 15.00),
-        'claude-3-opus-20240229': (15.00, 75.00),
-        'claude-3-sonnet-20240229': (3.00, 15.00),
-        'claude-3-haiku-20240307': (0.25, 1.25)
-    }
-    return costs.get(model, (0, 0))
 
 @app.route('/api/chat_history/<int:conversation_id>', methods=['GET'])
 def get_chat_history(conversation_id):
@@ -229,76 +300,26 @@ def get_chat_history(conversation_id):
 def reset_chat_history():
     try:
         conversation_id = request.json.get('conversation_id')
-        if conversation_id:
-            ChatMessage.query.filter_by(conversation_id=conversation_id).delete()
-        else:
-            ChatMessage.query.delete()
+        if not conversation_id:
+            return jsonify({"status": "error", "message": "Conversation ID is required"}), 400
+
+        print(f"Resetting chat history for conversation ID: {conversation_id}")
+        ChatMessage.query.filter_by(conversation_id=conversation_id).delete()
         db.session.commit()
         return jsonify({"status": "success", "message": "Chat history reset successfully"})
     except Exception as e:
         db.session.rollback()
         return jsonify({"status": "error", "message": str(e)}), 500
 
-# Add the new functions for silver data analysis
-def fetch_silver_data(start_date, end_date):
-    silver = yf.Ticker("SI=F")
-    data = silver.history(start=start_date, end=end_date)
-    return data['Close']
-
-def calculate_daily_changes(prices):
-    return prices.pct_change().dropna()
-
-def compare_todays_change(changes):
-    today_change = changes.iloc[-1]
-    historical_changes = changes.iloc[:-1]
-    
-    percentile = (historical_changes < today_change).mean() * 100
-    
-    return today_change, percentile
-
-def generate_histogram_data(changes):
-    hist, bin_edges = np.histogram(changes.iloc[:-1], bins=50)
-    return {
-        "counts": hist.tolist(),
-        "bin_edges": bin_edges.tolist(),
-        "today_change": float(changes.iloc[-1])
-    }
-
-# Add a new route for silver data analysis
-@app.route('/api/silver_analysis', methods=['GET'])
-def silver_analysis():
-    try:
-        end_date = datetime.now()
-        start_date = end_date - timedelta(days=365*30)
-        
-        prices = fetch_silver_data(start_date, end_date)
-        print(prices)
-        changes = calculate_daily_changes(prices)
-        
-        today_change, percentile = compare_todays_change(changes)
-        
-        histogram_data = generate_histogram_data(changes)
-        
-        return jsonify({
-            "today_change": float(today_change),
-            "percentile": float(percentile),
-            "histogram_data": histogram_data
-        })
-    except Exception as e:
-        logger.error(f"Error in silver analysis: {str(e)}", exc_info=True)
-        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
-
 @app.before_first_request
 def initialize_data():
     with app.app_context():
-        # Create a default conversation if it doesn't exist
         default_conversation = Conversation.query.filter_by(name="Default Conversation").first()
         if not default_conversation:
             default_conversation = Conversation(name="Default Conversation")
             db.session.add(default_conversation)
             db.session.commit()
 
-        # Assign the default conversation to all messages without a conversation
         ChatMessage.query.filter_by(conversation_id=None).update({ChatMessage.conversation_id: default_conversation.id})
         db.session.commit()
 
