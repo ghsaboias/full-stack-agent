@@ -88,6 +88,14 @@ def process_tool_call(tool_name, tool_input):
         return fetch_stock_data(ticker)
     else:
         return f"Unsupported tool: {tool_name}"
+    
+ALLOWED_MODELS = [
+    'claude-3-haiku-20240307',
+    'claude-3-5-sonnet-20240620',
+    'claude-3-opus-20240229',
+    'openai/gpt-4o-2024-08-06',
+    'openai/gpt-4o-mini-2024-07-18'
+]
 
 # Routes
 @app.route('/api/conversations', methods=['GET'])
@@ -119,6 +127,9 @@ def chat():
         conversation_id = request.json.get('conversation_id')
         generation_id = None
         
+        if model not in ALLOWED_MODELS:
+            return jsonify({"error": "Invalid model selected"}), 400
+
         print(f"Received request - Message: {user_message}, Model: {model}, Conversation ID: {conversation_id}")
         
         if not user_message and not image_data:

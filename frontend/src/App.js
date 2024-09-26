@@ -15,6 +15,7 @@ function App() {
   const [conversations, setConversations] = useState([]);
   const [activeConversation, setActiveConversation] = useState(null);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [selectedModel, setSelectedModel] = useState('claude-3-haiku-20240307'); // New state for selected model
 
   useEffect(() => {
     fetchConversations();
@@ -96,11 +97,15 @@ function App() {
     setMessage('');
     setImageUrl('');
     try {
-      console.log("Sending image data:", imageUrl ? imageUrl.substring(0, 50) + "..." : "No image");
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ message: userMessage, image_data: imageUrl, conversation_id: activeConversation })
+        body: JSON.stringify({ 
+          message: userMessage, 
+          image_data: imageUrl, 
+          conversation_id: activeConversation,
+          model: selectedModel
+        })
       });
       const data = await response.json();
       if (!response.ok) {
@@ -232,6 +237,10 @@ function App() {
     return parts;
   };
 
+  const handleModelChange = (e) => {
+    setSelectedModel(e.target.value);
+  };
+
   return (
     <div className="app-container">
       <button 
@@ -268,6 +277,16 @@ function App() {
       </div>
       <div className="main-content">
         <h1 className="header">AI Chatbot</h1>
+        <div className="model-selection">
+          <label htmlFor="model-select">Select Model:</label>
+          <select id="model-select" value={selectedModel} onChange={handleModelChange}>
+            <option value="claude-3-haiku-20240307">claude-3-haiku-20240307</option>
+            <option value="claude-3-5-sonnet-20240620">claude-3-5-sonnet-20240620</option>
+            <option value="claude-3-opus-20240229">claude-3-opus-20240229</option>
+            <option value="openai/gpt-4o-2024-08-06">openai/gpt-4o-2024-08-06</option>
+            <option value="openai/gpt-4o-mini-2024-07-18">openai/gpt-4o-mini-2024-07-18</option>
+          </select>
+        </div>
         <div className={`chat-container ${chat.length > 0 ? 'visible' : ''}`} ref={chatContainerRef}>
           {chat.map((message, index) => (
             <div key={index} className={`message ${message.role}-message`}>
