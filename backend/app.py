@@ -235,7 +235,23 @@ def chat():
             print(f"Generation stats: {stats}")
         else:
             messages = [{"role": msg.role, "content": msg.content} for msg in chat_history]
-            messages.append({"role": "user", "content": user_message})
+            
+            if image_data:
+                messages.append({
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": user_message or ""},
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": image_data,
+                            }
+                        }
+                    ]
+                })
+            else:
+                messages.append({"role": "user", "content": user_message})
+            
             messages.insert(0, {"role": "system", "content": "You are an AI assistant."})
             
             completion = openrouter_client.chat.completions.create(
@@ -248,8 +264,14 @@ def chat():
                 max_tokens=2000,
             )
             
+            if not completion.choices or not completion.choices[0].message:
+                logger.error(f"Invalid response from OpenRouter: {completion}")
+                return jsonify({"error": "Invalid response from OpenRouter"}), 500
+            
             bot_message = completion.choices[0].message.content
             generation_id = completion.id
+
+            logger.info(f"Received bot message: {bot_message}")
 
             time.sleep(2)
 
