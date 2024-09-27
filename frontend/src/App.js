@@ -243,12 +243,14 @@ function App() {
 
   return (
     <div className="app-container">
-      <button 
-        className="mobile-toggle" 
-        onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-      >
-        {isSidebarVisible ? 'Hide Conversations' : 'Show Conversations'}
-      </button>
+        <div className="button-container">
+            <button 
+                className="mobile-toggle" 
+                onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+            >
+                {isSidebarVisible ? 'Hide Conversations' : 'Show Conversations'}
+            </button>
+        </div>
       <div className={`conversation-panel ${isSidebarVisible ? '' : 'hidden'}`}>
         <button onClick={createNewConversation} className="new-conversation-btn">
           <FaPlus /> New Conversation
